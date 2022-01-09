@@ -60,16 +60,18 @@ view : Model -> Html Msg
 view model =
     div [ class "stack"] 
     [ viewHeader
-    , h2 [] [ text "Skill"]
     , viewGrid model.skills
     ]
     
 
 viewGrid : List Skill -> Html Msg 
 viewGrid skills =
-    div [ class "grid" ]
+    div []
+    [ h2 [] [ text "Skill"]
+    , div [ class "grid" ]
         (List.map viewBox skills)
-
+    ]
+    
 
 viewBox : Skill -> Html Msg 
 viewBox skill = 
