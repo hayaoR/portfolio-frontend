@@ -1,35 +1,38 @@
 module Skill exposing (..)
-import Browser
-import Html exposing (div)
-import Html.Attributes exposing (class)
-import Html exposing (Html, text)
-import Html exposing (p)
-import Json.Decode exposing (Decoder, succeed, int, string, list)
-import Json.Decode.Pipeline exposing (required)
-import Http
 
+import Browser
+import Html exposing (Html, div, h2, h3, p, text)
+import Html.Attributes exposing (class)
+import Http
+import Json.Decode exposing (Decoder, int, list, string, succeed)
+import Json.Decode.Pipeline exposing (required)
 import Util exposing (viewHeader)
-import Html exposing (h3)
-import Html exposing (h2)
+
 
 main : Program () Model Msg
-main = Browser.element
-    { init = init
-    , update = update
-    , subscriptions = \_ -> Sub.none
-    , view = view
-    }
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , subscriptions = \_ -> Sub.none
+        , view = view
+        }
+
 
 type alias Model =
-    { skills: List Skill }
+    { skills : List Skill }
 
-type Msg = GotSkills (Result Http.Error (List Skill))
 
-type alias Skill = 
-    { id: Int
-    , title: String
-    , content: String
+type Msg
+    = GotSkills (Result Http.Error (List Skill))
+
+
+type alias Skill =
+    { id : Int
+    , title : String
+    , content : String
     }
+
 
 skillDecoder : Decoder Skill
 skillDecoder =
@@ -38,47 +41,51 @@ skillDecoder =
         |> required "title" string
         |> required "content" string
 
-init : () -> (Model, Cmd Msg)
+
+init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { skills =  [] }
+    ( { skills = [] }
     , Http.get
         { url = "http://localhost:3000/skills"
         , expect = Http.expectJson GotSkills (list skillDecoder)
         }
     )
-update : Msg -> Model -> ( Model, Cmd msg)
+
+
+update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
-       GotSkills result ->
+        GotSkills result ->
             case result of
                 Ok skills ->
-                    ( { model | skills = skills }, Cmd.none)
+                    ( { model | skills = skills }, Cmd.none )
+
                 Err _ ->
-                    (model, Cmd.none)
+                    ( model, Cmd.none )
+
 
 view : Model -> Html Msg
 view model =
-    div [ class "stack"] 
-    [ viewHeader
-    , viewGrid model.skills
-    ]
-    
+    div [ class "stack" ]
+        [ viewHeader
+        , viewGrid model.skills
+        ]
 
-viewGrid : List Skill -> Html Msg 
+
+viewGrid : List Skill -> Html Msg
 viewGrid skills =
-    div [class "box"]
-    [ h2 [] [ text "Skill"]
-    , div [ class "grid" ]
-        (List.map viewBox skills)
-    ]
-    
+    div [ class "box" ]
+        [ h2 [] [ text "Skill" ]
+        , div [ class "grid" ]
+            (List.map viewBox skills)
+        ]
 
-viewBox : Skill -> Html Msg 
-viewBox skill = 
-    div [ class "box"] [ 
-        div [ class "stack"]
-            [
-                h3 [] [ text skill.title] 
-                , p [] [text skill.content]
+
+viewBox : Skill -> Html Msg
+viewBox skill =
+    div [ class "box" ]
+        [ div [ class "stack" ]
+            [ h3 [] [ text skill.title ]
+            , p [] [ text skill.content ]
             ]
-    ]
+        ]
