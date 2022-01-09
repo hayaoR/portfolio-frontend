@@ -66,7 +66,7 @@ view model =
 
 viewGrid : List Skill -> Html Msg 
 viewGrid skills =
-    div []
+    div [class "box"]
     [ h2 [] [ text "Skill"]
     , div [ class "grid" ]
         (List.map viewBox skills)
