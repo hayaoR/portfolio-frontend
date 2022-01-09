@@ -10,6 +10,7 @@ import Http
 
 import Util exposing (viewHeader)
 import Html exposing (h3)
+import Html exposing (h2)
 
 main : Program () Model Msg
 main = Browser.element
@@ -59,6 +60,7 @@ view : Model -> Html Msg
 view model =
     div [ class "stack"] 
     [ viewHeader
+    , h2 [] [ text "Skill"]
     , viewGrid model.skills
     ]
     
