@@ -6,7 +6,6 @@ import Html.Attributes exposing (class)
 import Http
 import Json.Decode exposing (Decoder, int, list, string, succeed)
 import Json.Decode.Pipeline exposing (required)
-import Util exposing (viewHeader)
 
 
 main : Program () Model Msg
@@ -44,7 +43,7 @@ skillDecoder =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { skills = [] }
+    ( Model []
     , Http.get
         { url = "http://localhost:3000/skills"
         , expect = Http.expectJson GotSkills (list skillDecoder)
@@ -66,15 +65,12 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "stack" ]
-        [ viewHeader
-        , viewGrid model.skills
-        ]
+    viewGrid model.skills
 
 
 viewGrid : List Skill -> Html Msg
 viewGrid skills =
-    div [ class "box" ]
+    div [ class "stack" ]
         [ h2 [] [ text "Skill" ]
         , div [ class "grid" ]
             (List.map viewBox skills)
