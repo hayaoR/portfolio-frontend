@@ -8,6 +8,9 @@ import Json.Decode exposing (Decoder, succeed, int, string, list)
 import Json.Decode.Pipeline exposing (required)
 import Http
 
+import Util exposing (viewHeader)
+import Html exposing (h3)
+
 main : Program () Model Msg
 main = Browser.element
     { init = init
@@ -54,7 +57,11 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    viewGrid model.skills
+    div [ class "stack"] 
+    [ viewHeader
+    , viewGrid model.skills
+    ]
+    
 
 viewGrid : List Skill -> Html Msg 
 viewGrid skills =
@@ -67,7 +74,7 @@ viewBox skill =
     div [ class "box"] [ 
         div [ class "stack"]
             [
-                p [] [text skill.title]
+                h3 [] [ text skill.title] 
                 , p [] [text skill.content]
             ]
     ]

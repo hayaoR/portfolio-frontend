@@ -14,6 +14,10 @@ footer {
     max-width: none;
 }
 
+ul {
+    list-style: none;
+}
+
 /* モジュラースケール */
 :root {
     --ratio: 1.5;
@@ -156,4 +160,16 @@ footer {
 .cover > h1 {
     margin-top: auto;
     margin-bottom: auto;
+}
+
+
+/* カスタム */
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_link {
+    justify-content: flex-start;
 }
