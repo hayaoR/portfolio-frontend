@@ -70,37 +70,19 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    viewStack model.careers
+    viewCareers model.careers
 
 
-viewStack : List Career -> Html Msg
-viewStack careers =
-    div [ class "stack" ]
-        [ h2 [] [ text "Career" ]
-        , div [ class "center" ]
-            [ div [ class "box" ]
-                [ div [ class "stack" ]
-                    (List.map viewBox careers)
-                ]
-            ]
-        ]
+viewCareers : List Career -> Html Msg
+viewCareers careers =
+    div [ class "section" ]
+        (List.map viewCareer careers)
 
 
-viewBox : Career -> Html Msg
-viewBox career =
-    div [ class "box" ]
-        [ div [ class "stack" ]
-            [ viewName ( career.years_from, career.years_to ) career.name
-            , div [ class "box" ] [ p [] [ text career.description ] ]
-            ]
-        ]
-
-
-viewName : ( String, String ) -> String -> Html Msg
-viewName years name =
-    div [ class "box" ]
-        [ div [ class "stack" ]
-            [ p [] [ text (first years ++ "~" ++ second years) ]
-            , h2 [] [ text name ]
-            ]
+viewCareer : Career -> Html Msg
+viewCareer career =
+    div [ class "box", class "content" ]
+        [ p [] [ text (career.years_from ++ "~" ++ career.years_to) ]
+        , h2 [] [ text career.name ]
+        , p [] [ text career.description ]
         ]

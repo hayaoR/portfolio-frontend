@@ -4,7 +4,7 @@ import About exposing (About)
 import Browser
 import Browser.Navigation as Nav
 import Career
-import Html exposing (Html, a, div, footer, h1, header, li, nav, text, ul)
+import Html exposing (Html, a, div, footer, h1, header, li, section, text, ul)
 import Html.Attributes exposing (class, classList, href)
 import Skill
 import Top
@@ -79,10 +79,12 @@ view model =
     in
     { title = "Hayao's portfolio"
     , body =
-        [ div [ class "container" ]
-            [ viewHeader model.page
-            , content
-            , viewFooter
+        [ section [ class "section" ]
+            [ div [ class "container" ]
+                [ viewHeader model.page
+                , content
+                , viewFooter
+                ]
             ]
         ]
     }
@@ -92,20 +94,20 @@ viewHeader : Page -> Html Msg
 viewHeader page =
     let
         links =
-            ul [ class "cluster", class "header_list" ]
-                [ navLink Top { url = "/", caption = "Top" }
-                , navLink About { url = "/about", caption = "About" }
-                , navLink Career { url = "/career", caption = "Career" }
-                , navLink Skill { url = "/skill", caption = "Skill" }
+            ul []
+                [ link Top { url = "/", caption = "Top" }
+                , link About { url = "/about", caption = "About" }
+                , link Career { url = "/career", caption = "Career" }
+                , link Skill { url = "/skill", caption = "Skill" }
                 ]
 
-        navLink route { url, caption } =
-            li [ classList [ ( "active", isActive { link = route, page = page } ) ] ]
+        link route { url, caption } =
+            li [ classList [ ( "is-active", isActive { link = route, page = page } ) ] ]
                 [ a [ href url ] [ text caption ] ]
     in
-    header [ class "cluster", class "header" ]
-        [ h1 [] [ text "Hayao's Portfolio" ]
-        , nav [] [ links ]
+    header [ class "header" ]
+        [ h1 [ class "title" ] [ text "Hayao's Portfolio" ]
+        , div [ class "tabs" ] [ links ]
         ]
 
 
@@ -130,7 +132,8 @@ isActive { link, page } =
 
 viewFooter : Html.Html msg
 viewFooter =
-    footer [] [ text "hayao 2022" ]
+    footer [ class "footer" ]
+        [ div [ class "content has-text-centered" ] [ text "hayao 2022" ] ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

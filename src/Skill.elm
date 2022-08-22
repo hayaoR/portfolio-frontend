@@ -70,18 +70,13 @@ view model =
 
 viewGrid : List Skill -> Html Msg
 viewGrid skills =
-    div [ class "stack" ]
-        [ h2 [] [ text "Skill" ]
-        , div [ class "grid" ]
-            (List.map viewBox skills)
-        ]
+    div [ class "section" ]
+        (List.map viewBox skills)
 
 
 viewBox : Skill -> Html Msg
 viewBox skill =
-    div [ class "box" ]
-        [ div [ class "stack" ]
-            [ h3 [] [ text skill.title ]
-            , p [] [ text skill.content ]
-            ]
+    div [ class "box", class "content" ]
+        [ h3 [] [ text skill.title ]
+        , p [] [ text skill.content ]
         ]

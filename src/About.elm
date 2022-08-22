@@ -1,7 +1,7 @@
 module About exposing (..)
 
 import Browser
-import Html exposing (Html, div, h2, img, p, text)
+import Html exposing (Html, div, h2, h3, img, label, p, text)
 import Html.Attributes exposing (alt, class, src)
 import Http
 import Json.Decode exposing (Decoder, string, succeed)
@@ -40,7 +40,7 @@ aboutDecoder =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { img = "hayao.jpg", about = About "" }
+    ( { img = "/hayao.jpg", about = About "" }
     , Http.get
         { url = "http://localhost:3000/about"
         , expect = Http.expectJson GotAbout aboutDecoder
@@ -62,12 +62,10 @@ update msg model =
 
 view : Model -> Html msg
 view model =
-    div [ class "stack" ]
-        [ h2 [] [ text "About me" ]
-        , div [ class "center" ]
-            [ div [ class "box" ]
-                [ div [ class "frame" ] [ img [ src model.img, alt "近影" ] [] ]
-                , p [] [ text model.about.text ]
-                ]
+    div [ class "section" ]
+        [ div [ class "content" ]
+            [ div [ class "center" ] [ img [ src model.img, alt "近影", class "hayao" ] [] ]
+            , h3 [] [ text "hayao" ]
+            , p [] [ text model.about.text ]
             ]
         ]

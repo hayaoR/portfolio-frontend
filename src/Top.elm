@@ -1,7 +1,7 @@
 module Top exposing (..)
 
 import Browser
-import Html exposing (Html, div, h1, text)
+import Html exposing (Html, div, h1, p, section, text)
 import Html.Attributes exposing (class)
 
 
@@ -35,5 +35,9 @@ update _ _ =
 
 view : Model -> Html Msg
 view _ =
-    div [ class "cover" ]
-        [ h1 [] [ text "Welcome To Hayao's Portfolio" ] ]
+    section [ class "section is-large" ]
+        [ div [ class "container" ]
+            [ p [ class "title" ] [ text "Welcome To Hayao's Portfolio" ]
+            , p [ class "substitute" ] [ text "I am an IT engineer before running out." ]
+            ]
+        ]
